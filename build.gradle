@@ -18,8 +18,8 @@ allprojects {
 
 
         maven {
-            url 'file:///Users/yanglei/baijiacloud/maven/'
-//          url 'https://raw.github.com/baijia/maven/master/'
+//            url 'file:///Users/yanglei/baijiacloud/maven/'
+          url 'https://raw.github.com/baijia/maven/master/'
         }
     }
 }
