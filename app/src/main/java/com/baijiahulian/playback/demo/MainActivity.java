@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements LPLaunchListener 
         });
 
         long classId = getIntent().getLongExtra("classId", 0);
-        //1. 创建房间。 PS： sign 参数暂时无用，可以传任意字符串
+        //1. 创建房间。
         mRoom = LivePlaybackSDK.newPlayBackRoom(this, 32958737L, classId, LPConstants.LPDeployType.Test);
 
         //2. 进入房间
