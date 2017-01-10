@@ -12,12 +12,12 @@ compile 'com.baijia.player:video-playback:0.0.1-snapshot'
 /**
  * 创建录播回放房间 -- 在线回放
  * @param context
+ * @param partnerId 合作方 ID
  * @param classId 教室 ID
- * @param sign
  * @param deployType
  * @return
  */
-PBRoom mRoom = LivePlaybackSDK.newPlayBackRoom(Context context, long classId, String sign, LPConstants.LPDeployType deployType) ;
+PBRoom mRoom = LivePlaybackSDK.newPlayBackRoom(Context context, long partnerId, long classId, LPConstants.LPDeployType deployType);
 ```
 注：
 
