@@ -38,7 +38,7 @@ mRoom.bindPlayerView(playerView);
 
 ## 6. 如果需要使用到 PPT、白板的回放, 请添加直播 ppt 组件：
 ```Gradle
-compile 'com.baijia.live:liveplayer-sdk-core-ppt:0.0.4'
+compile 'com.baijia.live:liveplayer-sdk-core-ppt:0.0.5'
 ```
 
 ### 6.1 集成文档回放功能
