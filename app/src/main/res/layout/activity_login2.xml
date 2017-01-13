@@ -18,7 +18,7 @@
             android:id="@+id/classId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="16122891883792"
+            android:text="17011291882169"
             android:hint="教室ID"/>
     </android.support.design.widget.TextInputLayout>
 
@@ -27,5 +27,12 @@
         android:id="@+id/startPlayBack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <Button
+        android:text="离线回放"
+        android:id="@+id/offlinePlacback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 
 </LinearLayout>

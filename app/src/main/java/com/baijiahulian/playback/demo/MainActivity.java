@@ -2,6 +2,7 @@ package com.baijiahulian.playback.demo;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -14,6 +15,11 @@ import android.widget.Toast;
 
 import com.baijia.player.playback.LivePlaybackSDK;
 import com.baijia.player.playback.PBRoom;
+import com.baijiahulian.common.networkv2.BJDownloadCallback;
+import com.baijiahulian.common.networkv2.BJNetRequestManager;
+import com.baijiahulian.common.networkv2.BJNetworkClient;
+import com.baijiahulian.common.networkv2.BJResponse;
+import com.baijiahulian.common.networkv2.HttpException;
 import com.baijiahulian.livecore.context.LPConstants;
 import com.baijiahulian.livecore.context.LPError;
 import com.baijiahulian.livecore.context.LiveRoom;
@@ -23,6 +29,8 @@ import com.baijiahulian.player.BJPlayerView;
 import com.baijiahulian.player.playerview.BJBottomViewPresenter;
 import com.baijiahulian.player.playerview.BJCenterViewPresenter;
 import com.baijiahulian.player.playerview.BJTopViewPresenter;
+
+import java.io.File;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -39,6 +47,13 @@ public class MainActivity extends AppCompatActivity implements LPLaunchListener 
 
     private UserListFragment mUserListFragment;
     private MessageListFragment mMessageListFragment;
+
+
+    BJNetworkClient client = new BJNetworkClient.Builder()
+            .setEnableLog(true)
+            .build();
+    final BJNetRequestManager netRequestManager = new BJNetRequestManager(client);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +76,29 @@ public class MainActivity extends AppCompatActivity implements LPLaunchListener 
             }
         });
 
-        long classId = getIntent().getLongExtra("classId", 0);
-        //1. 创建房间。
-        mRoom = LivePlaybackSDK.newPlayBackRoom(this, 32958737L, classId, LPConstants.LPDeployType.Test);
 
-        //2. 进入房间
-        mRoom.enterRoom(this);
+        mTabLayout.addTab(mTabLayout.newTab().setText("PPT"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("用户名单"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("聊天"));
+        mViewPager.setAdapter(pagerAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
+
+
+        long classId = getIntent().getLongExtra("classId", 0);
+
+        File dir = new File(Environment.getExternalStorageDirectory(), classId+"/");
+        dir.mkdirs();
+
+        final File videoFile = new File(Environment.getExternalStorageDirectory(), classId+"/video.mp4");
+        final File signalFile = new File(Environment.getExternalStorageDirectory(), classId+"/signal.file");
+
+        if (!getIntent().getBooleanExtra("offline", false)) {
+            mRoom = LivePlaybackSDK.newPlayBackRoom(this, 32958737L, classId, LPConstants.LPDeployType.Test);
+        } else {
+            mRoom = LivePlaybackSDK.newPlayBackRoom(MainActivity.this, 32958737L, classId, LPConstants.LPDeployType.Test, videoFile, signalFile);
+        }
+
+        mRoom.enterRoom(MainActivity.this);
         mPPTFragment = new LPPPTFragment();
         mPPTFragment.setLiveRoom(mRoom);
 
@@ -78,11 +110,61 @@ public class MainActivity extends AppCompatActivity implements LPLaunchListener 
 
         mRoom.bindPlayerView(playerView);
 
-        mTabLayout.addTab(mTabLayout.newTab().setText("PPT"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("用户名单"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("聊天"));
-        mViewPager.setAdapter(pagerAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
+        findViewById(R.id.downloadButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mRoom.getVideoUrl() == null || mRoom.getPackageSignalFile() == null) {
+                    Toast.makeText(getBaseContext(), "下不了", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                netRequestManager.newDownloadCall(mRoom.getVideoUrl(), videoFile)
+                        .executeAsync(MainActivity.this, new BJDownloadCallback() {
+                            @Override
+                            public void onDownloadFinish(BJResponse bjResponse, File file) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getBaseContext(), "视频文件下完了", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onProgress(long l, long l1) {
+
+                            }
+
+                            @Override
+                            public void onFailure(HttpException e) {
+
+                            }
+                        });
+
+                netRequestManager.newDownloadCall(mRoom.getPackageSignalFile(), signalFile)
+                        .executeAsync(MainActivity.this, new BJDownloadCallback() {
+                            @Override
+                            public void onDownloadFinish(BJResponse bjResponse, File file) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getBaseContext(), "信令文件下完了", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onProgress(long l, long l1) {
+
+                            }
+
+                            @Override
+                            public void onFailure(HttpException e) {
+                            }
+                        });
+
+            }
+        });
     }
 
     @Override
@@ -132,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements LPLaunchListener 
 
     @Override
     public void onLaunchError(LPError error) {
-        Toast.makeText(this, "进房间失败" + error.getCode() +" " + error.getMessage(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "进房间失败" + error.getCode() + " " + error.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

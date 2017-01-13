@@ -75,3 +75,51 @@ protected void onDestroy() {
 ```
 **在退出 Activity 时需要显示的将 BJPlayerView 和 PBRoom 关闭， 否则会造成内存泄漏**
 
+
+## CHANGELOG
+
+### version 0.0.3-snapshot 
+增加离线包回放功能
+
+apis:
+PBRoom 增加三个扩展 API
+```java
+/**
+ * @return  离线音频地址（仅供第三方下载使用，回放 SDK 不处理音频回放）
+ */
+String getAudioUrl();
+```
+
+```java
+/**
+ * @return 当前播放的视频文件地址
+ */
+String getVideoUrl();
+```
+
+```java
+/**
+ * @return 离线信令文件包地址
+ */
+String getPackageSignalFile();
+```
+
+在在线播放之后, 可以通过这三个 api 获取资源地址。 并自行下载离线包文件。
+
+### 创建离线回放房间
+
+```java
+
+/**
+ * 创建回放房间 -- 离线回放
+ * @param context
+ * @param partnerId  合作方ID
+ * @param classId 教室 ID
+ * @param deployType
+ * @param videoFile 视频文件
+ * @param signalFile 离线信令包文件
+ * @return
+ */
+PBRoom room =  LivePlaybackSDK.newPlayBackRoom(Context context, long partnerId, long classId, LPConstants.LPDeployType deployType, File videoFile, File signalFile); 
+```
+
