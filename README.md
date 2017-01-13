@@ -78,8 +78,8 @@ protected void onDestroy() {
 
 ## CHANGELOG
 
-### version 0.0.3-snapshot 
-增加离线包回放功能
+## version 0.0.3-snapshot 
+### 增加离线包回放功能
 
 apis:
 PBRoom 增加三个扩展 API
