@@ -2,7 +2,7 @@
 
 ## 1. 添加依赖, 在工程需要使用的 Module 中添加如下依赖
 ```Gradle
-compile 'com.baijia.player:video-playback:0.0.2-snapshot'
+compile 'com.baijia.player:video-playback:0.0.3-snapshot'
 ```
 
 ## 2. 请先正确集成好直播 SDK，和点播 SDK
