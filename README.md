@@ -2,26 +2,26 @@
 
 ## 1. 添加依赖, 在工程需要使用的 Module 中添加如下依赖
 ```Gradle
-compile 'com.baijia.player:video-playback:0.0.3-snapshot'
+compile 'com.baijia.player:video-playback:0.1.0'
 ```
 
-## 2. 请先正确集成好直播 SDK，和点播 SDK
+## 2. 请先正确集成好[直播 SDK](https://github.com/baijia/LivePlayerDemo_Android)，和[点播 SDK](https://github.com/baijia/maven/tree/master/com/baijia/player/videoplayer)
 
 ## 3. 创建回放房间
 ```java
 /**
  * 创建录播回放房间 -- 在线回放
  * @param context
- * @param partnerId 合作方 ID
  * @param classId 教室 ID
+ * @param token token由第三方后端返回
  * @param deployType
  * @return
  */
-PBRoom mRoom = LivePlaybackSDK.newPlayBackRoom(Context context, long partnerId, long classId, LPConstants.LPDeployType deployType);
+PBRoom mRoom = LivePlaybackSDK.newPlayBackRoom(Context context, long classId, String token, LPConstants.LPDeployType deployType);
 ```
 注：
 
-sign 参数暂时没有实际意义， 可以传任意非空字符串
+token 获取请参考百家云文档
 
 deploy 为运行环境，请参考直播 SDK 文档。
 
@@ -38,7 +38,7 @@ mRoom.bindPlayerView(playerView);
 
 ## 6. 如果需要使用到 PPT、白板的回放, 请添加直播 ppt 组件：
 ```Gradle
-compile 'com.baijia.live:liveplayer-sdk-core-ppt:0.0.5'
+compile 'com.baijia.live:liveplayer-sdk-core-ppt:0.0.9'
 ```
 
 ### 6.1 集成文档回放功能
@@ -78,6 +78,11 @@ protected void onDestroy() {
 
 ## CHANGELOG
 
+## 0.1.0
+修复离线进教室需要联网才能播放的问题
+修改了`newPlayBackRoom()`的传入参数
+mRoom.getChatVM().notifyDataChange()现更名为mRoom.getChatVM().getObservableOfNotifyDataChange()
+
 ## 0.0.3-snapshot 
 ### 增加离线包回放功能
 
@@ -113,13 +118,12 @@ String getPackageSignalFile();
 /**
  * 创建回放房间 -- 离线回放
  * @param context
- * @param partnerId  合作方ID
  * @param classId 教室 ID
  * @param deployType
  * @param videoFile 视频文件
  * @param signalFile 离线信令包文件
  * @return
  */
-PBRoom room =  LivePlaybackSDK.newPlayBackRoom(Context context, long partnerId, long classId, LPConstants.LPDeployType deployType, File videoFile, File signalFile); 
+PBRoom room =  LivePlaybackSDK.newPlayBackRoom(Context context, long classId, LPConstants.LPDeployType deployType, File videoFile, File signalFile);
 ```
 

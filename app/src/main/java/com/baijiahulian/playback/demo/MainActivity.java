@@ -86,16 +86,16 @@ public class MainActivity extends AppCompatActivity implements LPLaunchListener 
 
         long classId = getIntent().getLongExtra("classId", 0);
 
-        File dir = new File(Environment.getExternalStorageDirectory(), classId+"/");
+        File dir = new File(Environment.getExternalStorageDirectory(), classId + "/");
         dir.mkdirs();
 
-        final File videoFile = new File(Environment.getExternalStorageDirectory(), classId+"/video.mp4");
-        final File signalFile = new File(Environment.getExternalStorageDirectory(), classId+"/signal.file");
+        final File videoFile = new File(Environment.getExternalStorageDirectory(), classId + "/video.mp4");
+        final File signalFile = new File(Environment.getExternalStorageDirectory(), classId + "/signal.file");
 
         if (!getIntent().getBooleanExtra("offline", false)) {
-            mRoom = LivePlaybackSDK.newPlayBackRoom(this, 32958737L, classId, LPConstants.LPDeployType.Test);
+            mRoom = LivePlaybackSDK.newPlayBackRoom(this, classId, "token", LPConstants.LPDeployType.Test);
         } else {
-            mRoom = LivePlaybackSDK.newPlayBackRoom(MainActivity.this, 32958737L, classId, LPConstants.LPDeployType.Test, videoFile, signalFile);
+            mRoom = LivePlaybackSDK.newPlayBackRoom(MainActivity.this, classId, LPConstants.LPDeployType.Test, videoFile, signalFile);
         }
 
         mRoom.enterRoom(MainActivity.this);

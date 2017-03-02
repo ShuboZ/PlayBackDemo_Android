@@ -40,7 +40,7 @@ public class MessageListFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(messageAdapter);
 
-        mRoom.getChatVM().notifyDataChange()
+        mRoom.getChatVM().getObservableOfNotifyDataChange()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Void>() {
             @Override

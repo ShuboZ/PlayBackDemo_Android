@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.baijiahulian.playback.demo"
-        minSdkVersion 11
+        minSdkVersion 14
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -27,11 +27,11 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.1.0'
     testCompile 'junit:junit:4.12'
 
-    compile 'com.baijia.player:video-playback:0.0.3-snapshot'
+    compile 'com.baijia.player:video-playback:0.1.0'
     compile 'com.baijia.live:liveplayer-sdk-core-ppt:0.0.5'
 
     compile 'com.android.support:design:25.0.1'
 
-    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.1@aar'
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.1'
 
 }
