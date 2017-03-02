@@ -79,8 +79,8 @@ protected void onDestroy() {
 ## CHANGELOG
 
 ## 0.1.0
-修复离线进教室需要联网才能播放的问题
-修改了`newPlayBackRoom()`的传入参数
+修复离线进教室需要联网才能播放的问题<br>
+修改了`newPlayBackRoom()`的传入参数<br>
 mRoom.getChatVM().notifyDataChange()现更名为mRoom.getChatVM().getObservableOfNotifyDataChange()
 
 ## 0.0.3-snapshot 
