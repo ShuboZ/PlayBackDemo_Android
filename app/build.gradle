@@ -24,13 +24,13 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:appcompat-v7:25.3.0'
     testCompile 'junit:junit:4.12'
 
-    compile 'com.baijia.player:video-playback:0.1.0'
+    compile 'com.baijia.player:video-playback:0.1.5-snapshot'
     compile 'com.baijia.live:liveplayer-sdk-core-ppt:0.0.5'
 
-    compile 'com.android.support:design:25.0.1'
+    compile 'com.android.support:design:25.3.0'
 
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.1'
 

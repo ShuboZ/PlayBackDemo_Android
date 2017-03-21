@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.baijia.player.playback.LivePlaybackSDK;
 import com.baijia.player.playback.PBRoom;
+import com.baijia.player.playback.mocklive.OnPlayerListener;
 import com.baijiahulian.common.networkv2.BJDownloadCallback;
 import com.baijiahulian.common.networkv2.BJNetRequestManager;
 import com.baijiahulian.common.networkv2.BJNetworkClient;
@@ -26,6 +27,8 @@ import com.baijiahulian.livecore.context.LiveRoom;
 import com.baijiahulian.livecore.launch.LPLaunchListener;
 import com.baijiahulian.livecore.ppt.LPPPTFragment;
 import com.baijiahulian.player.BJPlayerView;
+import com.baijiahulian.player.bean.SectionItem;
+import com.baijiahulian.player.bean.VideoItem;
 import com.baijiahulian.player.playerview.BJBottomViewPresenter;
 import com.baijiahulian.player.playerview.BJCenterViewPresenter;
 import com.baijiahulian.player.playerview.BJTopViewPresenter;
@@ -108,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements LPLaunchListener 
         mMessageListFragment = new MessageListFragment();
         mMessageListFragment.setRoom(mRoom);
 
+        playerView.initPartner(partnerID, BJPlayerView.PLAYER_DEPLOY_ONLINE);
         mRoom.bindPlayerView(playerView);
 
         findViewById(R.id.downloadButton).setOnClickListener(new View.OnClickListener() {
@@ -162,6 +166,42 @@ public class MainActivity extends AppCompatActivity implements LPLaunchListener 
                             public void onFailure(HttpException e) {
                             }
                         });
+
+            }
+        });
+        mRoom.setOnPlayerListener(new OnPlayerListener() {
+            @Override
+            public void onVideoInfoInitialized(BJPlayerView bjPlayerView, long l, HttpException e) {
+
+            }
+
+            @Override
+            public void onError(BJPlayerView bjPlayerView, int i) {
+
+            }
+
+            @Override
+            public void onUpdatePosition(BJPlayerView bjPlayerView, int i) {
+
+            }
+
+            @Override
+            public void onSeekComplete(BJPlayerView bjPlayerView, int i) {
+
+            }
+
+            @Override
+            public void onSpeedUp(BJPlayerView bjPlayerView, float v) {
+
+            }
+
+            @Override
+            public void onVideoDefinition(BJPlayerView bjPlayerView, int i) {
+
+            }
+
+            @Override
+            public void onPlayCompleted(BJPlayerView bjPlayerView, VideoItem videoItem, SectionItem sectionItem) {
 
             }
         });
