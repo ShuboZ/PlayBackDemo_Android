@@ -79,6 +79,13 @@ public class MainActivity extends AppCompatActivity implements LPLaunchListener 
             }
         });
 
+        /**
+         *   设置在线播放视频格式
+         *   1:mp4
+         *   2:m3u8
+         *   3:flv
+         */
+        playerView.setVideoFormat(3);
 
         mTabLayout.addTab(mTabLayout.newTab().setText("PPT"));
         mTabLayout.addTab(mTabLayout.newTab().setText("用户名单"));
@@ -96,7 +103,9 @@ public class MainActivity extends AppCompatActivity implements LPLaunchListener 
         final File signalFile = new File(Environment.getExternalStorageDirectory(), classId + "/signal.file");
 
         if (!getIntent().getBooleanExtra("offline", false)) {
-            mRoom = LivePlaybackSDK.newPlayBackRoom(this, classId, "token", LPConstants.LPDeployType.Test);
+            mRoom = LivePlaybackSDK.newPlayBackRoom(this, classId, "test12345678", LPConstants.LPDeployType.Test);
+//            mRoom = LivePlaybackSDK.newPlayBackRoom(this, 17032875178571L, "g6vKZC7Su_gBAl9P_c-K28eb5t-21VTALles2MhLUrQxuSba8SBafg", LPConstants.LPDeployType.Product);
+
         } else {
             mRoom = LivePlaybackSDK.newPlayBackRoom(MainActivity.this, classId, LPConstants.LPDeployType.Test, videoFile, signalFile);
         }
@@ -111,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements LPLaunchListener 
         mMessageListFragment = new MessageListFragment();
         mMessageListFragment.setRoom(mRoom);
 
-        playerView.initPartner(partnerID, BJPlayerView.PLAYER_DEPLOY_ONLINE);
+//        playerView.initPartner(partnerID, BJPlayerView.PLAYER_DEPLOY_ONLINE);
         mRoom.bindPlayerView(playerView);
 
         findViewById(R.id.downloadButton).setOnClickListener(new View.OnClickListener() {
@@ -261,6 +270,7 @@ public class MainActivity extends AppCompatActivity implements LPLaunchListener 
     public void onLaunchSuccess(LiveRoom liveRoom) {
         mTextView.setText("enter susccess");
 
+//        playerView.playVideo();
         mRoom.getObservableOfUserNumberChange()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Integer>() {
