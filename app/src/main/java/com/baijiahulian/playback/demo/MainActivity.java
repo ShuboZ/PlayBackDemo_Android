@@ -104,10 +104,8 @@ public class MainActivity extends AppCompatActivity implements LPLaunchListener 
 
         if (!getIntent().getBooleanExtra("offline", false)) {
             mRoom = LivePlaybackSDK.newPlayBackRoom(this, classId, "test12345678", LPConstants.LPDeployType.Test);
-//            mRoom = LivePlaybackSDK.newPlayBackRoom(this, 17032875178571L, "g6vKZC7Su_gBAl9P_c-K28eb5t-21VTALles2MhLUrQxuSba8SBafg", LPConstants.LPDeployType.Product);
-
         } else {
-            mRoom = LivePlaybackSDK.newPlayBackRoom(MainActivity.this, classId, LPConstants.LPDeployType.Test, videoFile, signalFile);
+            mRoom = LivePlaybackSDK.newPlayBackRoom(MainActivity.this, 17032774844498L, LPConstants.LPDeployType.Product, videoFile, signalFile);
         }
 
         mRoom.enterRoom(MainActivity.this);
@@ -213,6 +211,11 @@ public class MainActivity extends AppCompatActivity implements LPLaunchListener 
             public void onPlayCompleted(BJPlayerView bjPlayerView, VideoItem videoItem, SectionItem sectionItem) {
 
             }
+
+            @Override
+            public void onVideoPrepared(BJPlayerView bjPlayerView) {
+
+            }
         });
     }
 
@@ -270,7 +273,7 @@ public class MainActivity extends AppCompatActivity implements LPLaunchListener 
     public void onLaunchSuccess(LiveRoom liveRoom) {
         mTextView.setText("enter susccess");
 
-//        playerView.playVideo();
+        playerView.playVideo();
         mRoom.getObservableOfUserNumberChange()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Integer>() {
