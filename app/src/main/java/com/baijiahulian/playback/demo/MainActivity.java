@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements LPLaunchListener 
 
         if (!getIntent().getBooleanExtra("offline", false)) {
             mRoom = LivePlaybackSDK.newPlayBackRoom(this, classId, "test12345678", LPConstants.LPDeployType.Test);
+
         } else {
             mRoom = LivePlaybackSDK.newPlayBackRoom(MainActivity.this, 17032774844498L, LPConstants.LPDeployType.Product, videoFile, signalFile);
         }

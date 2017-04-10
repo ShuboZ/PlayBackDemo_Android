@@ -2,7 +2,7 @@
 
 ## 1. 添加依赖, 在工程需要使用的 Module 中添加如下依赖
 ```Gradle
-compile 'com.baijia.player:video-playback:0.1.0'
+compile 'com.baijia.player:video-playback:0.1.4'
 ```
 
 ## 2. 请先正确集成好[直播 SDK](https://github.com/baijia/LivePlayerDemo_Android)，和[点播 SDK](https://github.com/baijia/maven/tree/master/com/baijia/player/videoplayer)
@@ -38,7 +38,7 @@ mRoom.bindPlayerView(playerView);
 
 ## 6. 如果需要使用到 PPT、白板的回放, 请添加直播 ppt 组件：
 ```Gradle
-compile 'com.baijia.live:liveplayer-sdk-core-ppt:0.0.9'
+compile 'com.baijia.live:liveplayer-sdk-core-ppt:0.1.3'
 ```
 
 ### 6.1 集成文档回放功能
